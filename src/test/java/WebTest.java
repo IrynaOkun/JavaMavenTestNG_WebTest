@@ -33,6 +33,7 @@ public class WebTest {
 
         driver.get(url);
 
+
         WebElement menuBrowseLanguages = driver.findElement(
                 By.xpath("//body/div[@id='wrap']/div[@id='navigation']/ul[@id='menu']/li/a[@href='/abc.html']")
         );
