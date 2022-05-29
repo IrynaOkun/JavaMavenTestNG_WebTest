@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.lang.reflect.Array;
 import java.util.Locale;
 
 
@@ -127,10 +128,105 @@ public class WebTest_HW_11_01 {
 
 
         WebElement titleText = driver.findElement(
-                By.xpath("//body/div[@id='wrap']/div[@id='main']/h2")
+                By.xpath("//body/div[@id='wrap']/div[@id='navigation']/ul[@id='submenu']//a")
         );
 
         String actualResult = titleText.getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+
+
+
+    }
+
+    @Test
+
+    public void testFirstSubMenu09() {
+
+        /*
+        TC_11_04 Подтвердите, что на странице по ссылке http://www.99-bottles-of-beer.net/abc.html ,
+        первый пункт подменю называется 0-9
+        Шаги:
+        1. Открыть вебсайт на странице
+        2. Считать название первого подзаголовка
+        3. Подтвердить, что название подменю соответствует ожидаемому
+        4. Закрыть браузер
+         */
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "C:/Users/chromedriver_win32/chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/abc.html";
+        String expectedResult = "0-9";
+
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        WebElement firstTab = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='navigation']/ul[@id='submenu']//a")
+        );
+
+        String actualResult = firstTab.getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+
+    }
+
+    @Test
+
+    public void testNameOfCreators() {
+
+        /*
+        TC_11_06 Подтвердите, что имена создателей сайта:
+        Oliver Schade
+        Gregor Scheithauer
+        Stefan Scheler
+        Шаги:
+        Напишите самостоятельно (найдите информацию о создателях на сайте,
+        и опишите шаги для навигации и исполнения тест кейса)
+
+        Steps:
+        1. Открыть вебсайт на базовой странице
+        2. Нажать на пункт подменю Team
+        3. Считать название 1, 2, 3 члена команды
+        4. Подтвердить, что их имена соотв ожидаемому
+        5. Закрыть браузер
+
+         */
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "C:/Users/chromedriver_win32/chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/";
+        String [] expectedResult = {"Oliver Schade", "Gregor Scheithauer", "Stefan Scheler"};
+
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        WebElement teamPage = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='navigation']/ul[@id='submenu']/li/a")
+        );
+        teamPage.click();
+
+        WebElement firstName = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='main']/h3[1]")
+        );
+
+        WebElement secondtName = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='main']/h3[2]")
+        );
+
+        WebElement thirdName = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='main']/h3[3]")
+        );
+
+        String [] actualResult = {firstName.getText(), secondtName.getText(), thirdName.getText()};
 
         Assert.assertEquals(actualResult, expectedResult);
 
