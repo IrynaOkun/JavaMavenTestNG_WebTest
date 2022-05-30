@@ -236,7 +236,65 @@ public class WebTest_HW_11_01 {
 
     @Test
 
+    public void testEmptyFieldError() {
 
+        /*
+        TC_11_12 Precondition: Если на странице по ссылке http://www.99-bottles-of-beer.net/submitnewlanguage.html ,
+        пользователь нажмет кнопку Submit Language,
+        не заполнив информацию в обязательных полях, будет показана ошибка с текстом
+
+        Error: Precondition failed - Incomplete Input.
+
+        Подтвертите, что в тексте ошибки слова Error, Precondition, Incomplete и Input
+        написаны с большой буквы, а слово failed  написано  с маленькой буквы.
+        Так же подтвердите, что в тексте ошибки содержатся знаки :, -  и .
+
+                Шаги:
+        1. Открыть вебсайт на странице
+        2. Нажать на кнопку Submit Language
+        3. Считать текст ошибки
+        4. Подтвердить requirenments
+        5. Закрыть браузер
+*/
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "C:/Users/chromedriver_win32/chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/submitnewlanguage.html";
+        String expectedResult1 = "Error";
+        String expectedResult2 = "Precondition";
+        String expectedResult3 = "Incomplete";
+        String expectedResult4 = "Input";
+        String expectedResult5 = "failed";
+        String expectedResult6 = ":";
+        String expectedResult7 = "-";
+        String expectedResult8 = ".";
+
+
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        driver.findElement(By.xpath("//input[@type='submit']")).click();
+
+
+        WebElement checkTextError = driver.findElement(
+                By.xpath("//p[@style]"));
+
+        Assert.assertEquals(checkTextError.getText().substring(0, 5), expectedResult1);
+        Assert.assertEquals(checkTextError.getText().substring(7, 19), expectedResult2);
+        Assert.assertEquals(checkTextError.getText().substring(29, 39), expectedResult3);
+        Assert.assertEquals(checkTextError.getText().substring(40, 45), expectedResult4);
+        Assert.assertEquals(checkTextError.getText().substring(20, 26), expectedResult5);
+        Assert.assertEquals(checkTextError.getText().substring(5, 6),expectedResult6);
+        Assert.assertEquals(checkTextError.getText().substring(27, 28), expectedResult7);
+        Assert.assertEquals(checkTextError.getText().substring(45), expectedResult8);
+
+
+        driver.quit();
+
+
+    }
 
 
   }
