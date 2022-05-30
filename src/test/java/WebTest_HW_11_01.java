@@ -351,7 +351,45 @@ public class WebTest_HW_11_01 {
 
     }
 
+    @Test
 
+    public void testImportantStyles() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "C:/Users/chromedriver_win32/chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/submitnewlanguage.html";
+        String expectedResultStyle = "background-color: red; color: white;";
+        String expectedResultBold = "b";
+        String expectedResultCapital = "IMPORTANT:";
+
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        WebElement style = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='main']/ul/li/span")
+        );
+        String actualResultStyle = style.getAttribute("style");
+
+        WebElement bold = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='main']/ul/li/span/b")
+        );
+        String actualResultBold = bold.getTagName();
+
+        WebElement capital = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='main']/ul/li/span/b")
+        );
+        String actualResultCapital = capital.getText();
+
+        Assert.assertEquals(actualResultStyle, expectedResultStyle);
+        Assert.assertEquals(actualResultBold, expectedResultBold);
+        Assert.assertEquals(actualResultCapital, expectedResultCapital.toUpperCase());
+
+        driver.quit();
+
+
+    }
 
 
   }
