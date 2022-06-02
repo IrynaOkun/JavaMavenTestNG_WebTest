@@ -98,7 +98,7 @@ public class WebTest_HW_11_01 {
 
     @Test
 
-    public void testCheckTitleSubmit () {
+    public void testCheckTitleSubmit() {
 
         /*
         TC_11_03 Подтвердите, что на странице по базовой ссылке
@@ -137,7 +137,6 @@ public class WebTest_HW_11_01 {
         Assert.assertEquals(actualResult, expectedResult);
 
         driver.quit();
-
 
 
     }
@@ -203,7 +202,7 @@ public class WebTest_HW_11_01 {
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "C:/Users/chromedriver_win32/chromedriver.exe";
         String url = "http://www.99-bottles-of-beer.net/";
-        String [] expectedResult = {"Oliver Schade", "Gregor Scheithauer", "Stefan Scheler"};
+        String[] expectedResult = {"Oliver Schade", "Gregor Scheithauer", "Stefan Scheler"};
 
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
@@ -227,7 +226,7 @@ public class WebTest_HW_11_01 {
                 By.xpath("//body/div[@id='wrap']/div[@id='main']/h3[3]")
         );
 
-        String [] actualResult = {firstName.getText(), secondtName.getText(), thirdName.getText()};
+        String[] actualResult = {firstName.getText(), secondtName.getText(), thirdName.getText()};
 
         Assert.assertEquals(actualResult, expectedResult);
 
@@ -287,7 +286,7 @@ public class WebTest_HW_11_01 {
         Assert.assertEquals(checkTextError.getText().substring(29, 39), expectedResult3);
         Assert.assertEquals(checkTextError.getText().substring(40, 45), expectedResult4);
         Assert.assertEquals(checkTextError.getText().substring(20, 26), expectedResult5);
-        Assert.assertEquals(checkTextError.getText().substring(5, 6),expectedResult6);
+        Assert.assertEquals(checkTextError.getText().substring(5, 6), expectedResult6);
         Assert.assertEquals(checkTextError.getText().substring(27, 28), expectedResult7);
         Assert.assertEquals(checkTextError.getText().substring(45), expectedResult8);
 
@@ -323,9 +322,9 @@ public class WebTest_HW_11_01 {
         driver.get(url);
 
         String bold = driver.findElement(
-                By.xpath("//body/div[@id='wrap']/div[@id='main']/ul/li/" +
-                        "span[@style=\"background-color:red; color: white\"]/b")
-        )
+                        By.xpath("//body/div[@id='wrap']/div[@id='main']/ul/li/" +
+                                "span[@style=\"background-color:red; color: white\"]/b")
+                )
                 .getTagName();
 
         Assert.assertEquals(bold, "b");
@@ -390,7 +389,92 @@ public class WebTest_HW_11_01 {
 
     }
 
+    @Test
+    public void testLanguageMySQL() {
 
-  }
+        /*
+        TC_12_02 Подтвердите, что в меню BROWSE LANGUAGES, подменю  M,
+        последний программный язык в таблице -  MySQL
+
+    Шаги:
+    1. Открыть базовую страницу
+    2. Нажать на пункт меню BROWSE LANGUAGES
+    3. Нажать на подменю M
+    4. Подтвердить, что последний язык программирования на странице - MySQL
+
+         */
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "C:/Users/chromedriver_win32/chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/";
+        String expectedResult = "MySQL";
+
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        driver.findElement(By.xpath("//div/ul/li/a[@href='/abc.html']")).click();
+        driver.findElement(By.xpath("//a[@href='m.html']")).click();
+
+        WebElement lastLanguage = driver.findElement(By.xpath("//a[@href='language-mysql-1252.html']"));
+        String actualResult = lastLanguage.getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+
+
+    }
+
+    @Test
+
+    public void testTitlesOfTable() {
+
+        /*
+        TC_12_03 Подтвердите, что в меню BROWSE LANGUAGES существует таблица с заголовками
+        Language, Author, Date, Comments, Rate
+         */
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "C:/Users/chromedriver_win32/chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/";
+        String expectedResult = "Language, Author, Date, Comments, Rate,";
+
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        driver.findElement(By.xpath("//a[@href='/abc.html']")).click();
+        WebElement titles = driver.findElement(By.xpath("//tbody/tr/th"));
+        //String actualResult = titles.getText();
+
+
+        String[] tableArr = new String[5];
+        String actualresult = "";
+        for(int i = 0; i < tableArr.length; i++) {
+            tableArr[i] = driver
+                    .findElement(
+                            By.xpath("//tbody/tr/th[" + (i + 1) + "]")
+                    ).getText();
+            actualresult = actualresult.concat(tableArr[i] + ", ");
+        }
+
+        Assert.assertEquals(actualresult.trim(), expectedResult);
+
+        //Assert.assertEquals(actualResult, expectedResult.replace(",", ""));
+
+
+        driver.quit();
+
+
+
+    }
+
+
+
+
+}
 
 
