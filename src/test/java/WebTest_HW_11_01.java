@@ -389,6 +389,9 @@ public class WebTest_HW_11_01 {
 
     }
 
+
+
+
     @Test
     public void testLanguageMySQL() {
 
@@ -468,9 +471,42 @@ public class WebTest_HW_11_01 {
 
         driver.quit();
 
+    }
+
+    @Test
+
+    public void testMathData() {
+
+        /*
+    TC_12_04 Подтвердите, что создатель решения на языке Mathematica - Brenton Bostick,
+    дата обновления решения на этом языке - 03/16/06, и что это решение имеет 1 комментарий
+     */
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "C:/Users/chromedriver_win32/chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/";
+        String expectedResultData = "03/16/06";
+        String expectedResultComment = "1";
+
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        driver.findElement(By.xpath("//a[@href='/abc.html']")).click();
+        driver.findElement(By.xpath("//ul[@id='submenu']/li/a[@href='m.html']")).click();
+
+
+
+
+
 
 
     }
+
+
+
+
 
 
 
