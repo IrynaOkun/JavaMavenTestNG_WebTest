@@ -7,6 +7,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -485,31 +487,51 @@ public class WebTest_HW_11_01 {
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "C:/Users/chromedriver_win32/chromedriver.exe";
         String url = "http://www.99-bottles-of-beer.net/";
-        String expectedResultData = "03/16/06";
-        String expectedResultComment = "1";
+
+        String languageExpected = "Mathematica";
+        String authorExpected = "Brenton Bostick";
+        String dataExpected = "03/16/06";
+        String commentsExpected = "1";
+
+        StringBuilder expectedResult = new StringBuilder();
+        expectedResult
+                .append(languageExpected)
+                .append(" ")
+                .append(authorExpected)
+                .append(" ")
+                .append(dataExpected)
+                .append(" ")
+                .append(commentsExpected);
 
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
 
         driver.get(url);
 
-        driver.findElement(By.xpath("//a[@href='/abc.html']")).click();
-        driver.findElement(By.xpath("//ul[@id='submenu']/li/a[@href='m.html']")).click();
+        //driver.findElement(By.xpath("//a[@href='/abc.html']")).click();
+       // driver.findElement(By.xpath("//ul[@id='submenu']/li/a[@href='m.html']")).click();
 
+        driver.findElement(By.linkText("Browse Languages")).click();
+        driver.findElement(By.linkText("M")).click();
 
+        List<WebElement> trs = driver.findElements(By.xpath("//table[@id='category']/tbody/tr"));
 
+        WebElement tdMathematica = driver.findElement(By.linkText("Mathematica"));
 
+        List <String> actualResult = new ArrayList<>();
 
+        for (WebElement tr: trs) {
+            if (tr.getText().contains(languageExpected)) {
+                actualResult.add(tr.getText());
+            }
 
+            }
+
+        Assert.assertEquals(actualResult.size(), 1);
+        Assert.assertFalse(actualResult.get(0).isEmpty());
+        Assert.assertEquals(actualResult.get(0), expectedResult.toString());
 
     }
-
-
-
-
-
-
-
 
 }
 
